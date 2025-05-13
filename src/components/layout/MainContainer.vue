@@ -26,14 +26,16 @@ const loadFFMPEG = async () => {
   try {
     console.log('Starting ffmpeg.load()...')
 
-    const corePath = '/ffmpeg/ffmpeg-core.js'
-    const wasmPath = '/ffmpeg/ffmpeg-core.wasm'
-    const workerPath = '/ffmpeg/ffmpeg-core.worker.js'
+    // const corePath = '/ffmpeg/ffmpeg-core.js'
+    // const wasmPath = '/ffmpeg/ffmpeg-core.wasm'
+    // const workerPath = '/ffmpeg/ffmpeg-core.worker.js'
+
+    const baseURL = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core-mt@0.12.9/dist/esm'
 
     await ffmpeg.load({
-      coreURL: await toBlobURL(corePath, 'text/javascript'),
-      wasmURL: await toBlobURL(wasmPath, 'application/wasm'),
-      workerURL: await toBlobURL(workerPath, 'text/javascript'),
+      coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
+      wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+      workerURL: await toBlobURL(`${baseURL}/ffmpeg-core.worker.js`, 'text/javascript'),
     })
     console.log('ffmpeg.load() finished successfully.')
     loaded.value = true
