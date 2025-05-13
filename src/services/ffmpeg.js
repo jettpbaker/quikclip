@@ -43,9 +43,11 @@ const ffmpeg = {
         })
 
         isReady.value = true
+        message.value = 'FFMPEG core loaded'
       } catch (err) {
         console.error(err)
         isReady.value = false
+        message.value = 'Error loading FFMPEG core'
       } finally {
         isLoading.value = false
       }
