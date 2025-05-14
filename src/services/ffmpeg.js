@@ -3,9 +3,18 @@ import { fetchFile } from '@ffmpeg/util'
 import { ref } from 'vue'
 
 const instance = new FFmpeg()
+const progress = ref(0)
 
 instance.on('log', (message) => {
   console.log(message.message)
+})
+
+instance.on('progress', (ratio) => {
+  if (ratio.progress > 1) {
+    progress.value = 0
+  } else {
+    progress.value = Math.floor(ratio.progress * 100)
+  }
 })
 
 const isLoading = ref(false)
@@ -30,6 +39,7 @@ const ffmpeg = {
   isLoading: isLoading.value,
   isReady: isReady.value,
   instance,
+  progress,
 
   async load() {
     isLoading.value = true
@@ -46,6 +56,10 @@ const ffmpeg = {
   async cutVideo(file, startTime, endTime) {
     const { inputName, outputName } = await prepareFile(file)
     const args = [
+      '-analyzeduration',
+      '20M',
+      '-probesize',
+      '10M',
       '-ss',
       startTime,
       '-to',

@@ -120,9 +120,7 @@ onMounted(() => {
   </v-container>
 </template>
 
-<style scoped>
-/* Add any component-specific styles here */
-</style>
+<style scoped></style>
 
 <!-- Local: 00:13:57 -->
 <!-- Remote: 00:43:00 -->

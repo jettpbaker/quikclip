@@ -31,6 +31,10 @@ const emitFileSelected = () => {
   emit('file-selected', file.value)
 }
 
+defineExpose({
+  clearFile,
+})
+
 const fileSizeFormatted = computed(() => {
   if (!file.value) return ''
   const bytes = file.value.size
