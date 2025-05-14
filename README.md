@@ -4,7 +4,7 @@ QuikClip is a web application that allows you to quickly clip sections from vide
 
 ## Overview
 
-This project is a incredibly minimalist MVP built with Vue 3, Vite, and Vuetify. It leverages `ffmpeg.wasm` to perform video and audio processing tasks client-side. Processed clips are also stored locally in your browser's IndexedDB, so the whole app runs completely in the client.
+This project is an incredibly minimalist MVP built with Vue 3, Vite, and Vuetify. It leverages `ffmpeg.wasm` to perform video and audio processing tasks client-side. Processed clips are also stored locally in your browser's IndexedDB, so the whole app runs completely in the client.
 
 The primary goal of this application was for me to start experimenting with Vuetify and gain more Vue experience. That being said, I do see myself using it on occasion which is cool.
 
