@@ -54,6 +54,7 @@ const fileSizeFormatted = computed(() => {
     <template v-if="!file">
       <v-icon icon="mdi-upload" class="file-icon"></v-icon>
       <h3>Drop file here or click to upload</h3>
+      <p class="file-size-limit">Max size: 2GB</p>
       <input
         type="file"
         accept="video/*"
@@ -118,6 +119,12 @@ const fileSizeFormatted = computed(() => {
   background-color: rgb(39, 39, 39);
   border: 2px solid #515151;
   border-radius: 0.5rem;
+}
+
+.file-size-limit {
+  font-size: 0.8rem;
+  color: #a0aec0;
+  margin-top: 0.5rem;
 }
 
 .file-header {

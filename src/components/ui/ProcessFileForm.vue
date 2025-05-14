@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import FileUploader from './FileUploader.vue'
 import ffmpeg from '@/services/ffmpeg'
-
+import { db } from '@/db/db'
 const startTime = ref('')
 const endTime = ref('')
 const file = ref(null)
@@ -49,6 +49,11 @@ const run = async () => {
 
   const data = await ffmpeg.cutVideo(file.value, startTime.value, endTime.value)
 
+  console.log('Trying to add clip to db')
+  await db.clips.add({
+    createdAt: new Date(),
+    video: new Blob([data.buffer], { type: 'video/mp4' }),
+  })
   const src = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }))
   videoSrc.value = src
 }
@@ -105,7 +110,6 @@ const timeout = ref(3000)
       RUN
     </v-btn>
   </v-col>
-  <video controls :src="videoSrc" style="width: 20rem; height: auto" />
 </template>
 
 <style scoped>
