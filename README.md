@@ -1,6 +1,6 @@
 # QuikClip
 
-QuikClip is a web application that allows you to quickly clip sections from video in your browser.
+[QuikClip](https://quikclip.pages.dev/) is a web application that allows you to quickly clip sections from video in your browser.
 
 ## Overview
 
