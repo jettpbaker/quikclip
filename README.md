@@ -1,35 +1,34 @@
-# quikpic
+# QuikClip
 
-This template should help get you started developing with Vue 3 in Vite.
+QuikClip is a web application that allows you to quickly clip sections from video in your browser.
 
-## Recommended IDE Setup
+## Overview
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+This project is a incredibly minimalist MVP built with Vue 3, Vite, and Vuetify. It leverages `ffmpeg.wasm` to perform video and audio processing tasks client-side. Processed clips are also stored locally in your browser's IndexedDB, so the whole app runs completely in the client.
 
-## Customize configuration
+The primary goal of this application was for me to start experimenting with Vuetify and gain more Vue experience. That being said, I do see myself using it on occasion which is cool.
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+Expect some bugs, some weird code, I threw this together fairly quickly.
+
+## Key Technologies
+
+- **Vite:** For the fast development server and build process.
+- **Vue 3:** For the reactive UI.
+- **Vuetify:** For UI components.
+- **Vue-Router:** For routing
+- **FFmpeg.wasm:** For in-browser video/audio processing.
+- **Dexie.js:** For interacting with IndexedDB.
 
 ## Project Setup
+
+To get started with development:
 
 ```sh
 pnpm install
 ```
 
-### Compile and Hot-Reload for Development
+### Run Dev Server
 
 ```sh
 pnpm dev
-```
-
-### Compile and Minify for Production
-
-```sh
-pnpm build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-pnpm lint
 ```
