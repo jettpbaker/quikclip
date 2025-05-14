@@ -7,8 +7,12 @@ import SidebarContainer from './SidebarContainer.vue'
   <v-main>
     <v-container fluid class="pa-0 fill-height">
       <v-row no-gutters class="fill-height">
-        <MainContainer />
-        <SidebarContainer />
+        <v-col cols="12" md="8">
+          <MainContainer />
+        </v-col>
+        <v-col cols="12" md="4">
+          <SidebarContainer />
+        </v-col>
       </v-row>
     </v-container>
   </v-main>

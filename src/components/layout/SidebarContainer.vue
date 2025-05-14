@@ -1,7 +1,15 @@
-<script setup></script>
+<script setup>
+// Add any sidebar specific logic here if needed
+</script>
 
 <template>
-  <v-col cols="12" sm="4" class="pa-5 order-2">
-    <h1>Sidebar</h1>
-  </v-col>
+  <v-sheet color="grey-darken-3" height="100%" class="pa-4">
+    <h2 class="text-h5 mb-4">SIDEBAR</h2>
+    <p>This is the sidebar content.</p>
+    <!-- You can add more sidebar elements here -->
+  </v-sheet>
 </template>
+
+<style scoped>
+/* Add any sidebar specific styles here */
+</style>
