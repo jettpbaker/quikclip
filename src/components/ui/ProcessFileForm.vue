@@ -5,6 +5,7 @@ import FileUploader from './FileUploader.vue'
 const activeTab = ref(0)
 const startTime = ref('')
 const endTime = ref('')
+const file = ref(null)
 
 const checkTimeFormats = (startTime, endTime) => {
   if (/^\d{2}:\d{2}$/.test(startTime) && /^\d{2}:\d{2}$/.test(endTime)) {
@@ -24,6 +25,16 @@ const run = () => {
   })
 
   checkTimeFormats(startTime.value, endTime.value)
+
+  if (!file.value) {
+    snackbar.value = true
+    text.value = 'Please select a file'
+    return
+  }
+}
+
+const handleFileSelected = (file) => {
+  file.value = file
 }
 
 const snackbar = ref(false)
@@ -37,7 +48,7 @@ const timeout = ref(3000)
   </v-snackbar>
 
   <v-col cols="12" md="10" lg="8" class="my-4 pa-0">
-    <FileUploader />
+    <FileUploader @file-selected="handleFileSelected" />
 
     <v-tabs v-model="activeTab" fixed-tabs bg-color="#121212" class="w-100 mt-4">
       <v-tab>Cut</v-tab>
@@ -77,4 +88,5 @@ const timeout = ref(3000)
       RUN
     </v-btn>
   </v-col>
+  <video controls />
 </template>

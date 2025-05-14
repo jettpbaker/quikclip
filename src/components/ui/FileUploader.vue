@@ -1,6 +1,8 @@
 <script setup>
 import { ref, computed } from 'vue'
 
+const emit = defineEmits(['file-selected'])
+
 const fileInput = ref(null)
 const file = ref(null)
 
@@ -10,10 +12,12 @@ const handleUserClick = () => {
 
 const handleFileChange = (event) => {
   file.value = event.target.files[0]
+  emitFileSelected()
 }
 
 const handleDrop = (event) => {
   file.value = event.dataTransfer.files[0]
+  emitFileSelected()
 }
 
 const clearFile = () => {
@@ -21,6 +25,10 @@ const clearFile = () => {
   if (fileInput.value) {
     fileInput.value.value = ''
   }
+}
+
+const emitFileSelected = () => {
+  emit('file-selected', file.value)
 }
 
 const fileSizeFormatted = computed(() => {
