@@ -1,12 +1,11 @@
 <script setup>
 import HeaderContainer from './components/layout/HeaderContainer.vue'
-import ContentContainer from './components/layout/ContentContainer.vue'
 </script>
 
 <template>
   <v-app class="app">
     <HeaderContainer />
-    <ContentContainer />
+    <router-view />
   </v-app>
 </template>
 
