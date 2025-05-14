@@ -48,7 +48,6 @@ const run = async () => {
 
   const data = await ffmpeg.cutVideo(file.value, startTime.value, endTime.value)
 
-  console.log('Trying to add clip to db')
   await db.clips.add({
     createdAt: new Date(),
     video: new Blob([data.buffer], { type: 'video/mp4' }),

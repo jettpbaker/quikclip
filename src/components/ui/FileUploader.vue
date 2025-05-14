@@ -97,7 +97,7 @@ const fileSizeFormatted = computed(() => {
   align-items: center;
   justify-content: center;
   background-color: #141414;
-  border: 2px dashed #858585;
+  border: 2px dashed #4e4e4e;
   text-align: center;
   cursor: pointer;
   padding: 1rem;
@@ -105,7 +105,7 @@ const fileSizeFormatted = computed(() => {
 
 .file-uploader:hover {
   background-color: #171717;
-  border-color: #949494;
+  border-color: #5e5e5e;
 }
 
 .file-details-container {
@@ -117,7 +117,7 @@ const fileSizeFormatted = computed(() => {
   width: 100%;
   height: 100%;
   background-color: rgb(39, 39, 39);
-  border: 2px solid #515151;
+  border: 2px solid #4e4e4e;
   border-radius: 0.5rem;
 }
 
@@ -180,7 +180,7 @@ const fileSizeFormatted = computed(() => {
 
 .file-name {
   font-size: 1.5rem;
-  color: #e2e8f0;
+  color: white;
   font-weight: bold;
   white-space: nowrap;
   overflow: hidden;
@@ -190,13 +190,13 @@ const fileSizeFormatted = computed(() => {
 
 .file-size {
   font-size: 1rem;
-  color: #a0aec0;
+  color: #a8a8a8;
 }
 
 .clear-button {
   background: none;
   border: none;
-  color: #cbd5e0;
+  color: white;
   font-size: 1.25rem;
   cursor: pointer;
   line-height: 1;

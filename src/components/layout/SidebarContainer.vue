@@ -1,15 +1,16 @@
 <script setup>
-// Add any sidebar specific logic here if needed
 import ClipList from '@/components/ui/ClipList.vue'
 </script>
 
 <template>
-  <v-sheet color="grey-darken-3" height="100%" class="pa-4">
-    <!-- Sidebar displays user clips -->
+  <v-sheet height="100%" class="sidebar pa-4">
     <ClipList />
   </v-sheet>
 </template>
 
 <style scoped>
-/* Add any sidebar specific styles here */
+.sidebar {
+  background-color: #121212;
+  border-left: 1px solid #4e4e4e;
+}
 </style>
