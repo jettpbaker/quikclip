@@ -21,7 +21,6 @@ const prepareFile = async (file) => {
   const outputName = `${crypto.randomUUID()}.mp4`
 
   const uint8 = await fetchFile(file)
-  console.log('Uint8', uint8)
   await instance.writeFile(inputName, uint8)
 
   return { inputName, outputName }
@@ -55,36 +54,6 @@ const ffmpeg = {
       inputName,
       '-c:v',
       'copy',
-      '-c:a',
-      'aac',
-      '-b:a',
-      '128k',
-      outputName,
-    ]
-
-    await instance.exec(args)
-    const data = await instance.readFile(outputName)
-
-    instance.deleteFile(inputName)
-    instance.deleteFile(outputName)
-
-    return data
-  },
-  async compressVideo(file, startTime, endTime) {
-    const { inputName, outputName } = await prepareFile(file)
-    const args = [
-      '-ss',
-      startTime,
-      '-i',
-      inputName,
-      '-to',
-      endTime,
-      '-c:v',
-      'libx264',
-      '-crf',
-      '28',
-      '-preset',
-      'medium',
       '-c:a',
       'aac',
       '-b:a',
