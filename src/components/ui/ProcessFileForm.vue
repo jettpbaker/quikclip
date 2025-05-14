@@ -6,7 +6,6 @@ import { db } from '@/db/db'
 const startTime = ref('')
 const endTime = ref('')
 const file = ref(null)
-const videoSrc = ref(null)
 
 const checkTimeFormats = (startTime, endTime) => {
   if (!/^\d{2}:\d{2}$/.test(startTime) && !/^\d{2}:\d{2}$/.test(endTime)) {
@@ -49,13 +48,10 @@ const run = async () => {
 
   const data = await ffmpeg.cutVideo(file.value, startTime.value, endTime.value)
 
-  console.log('Trying to add clip to db')
   await db.clips.add({
     createdAt: new Date(),
     video: new Blob([data.buffer], { type: 'video/mp4' }),
   })
-  const src = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }))
-  videoSrc.value = src
 }
 
 const handleFileSelected = (selectedFile) => {
