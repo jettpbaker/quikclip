@@ -6,6 +6,15 @@ const activeTab = ref(0)
 const startTime = ref('')
 const endTime = ref('')
 
+const checkTimeFormats = (startTime, endTime) => {
+  if (/^\d{2}:\d{2}$/.test(startTime) && /^\d{2}:\d{2}$/.test(endTime)) {
+    return true
+  }
+  snackbar.value = true
+  text.value = 'Time must be in MM:SS format'
+  return false
+}
+
 const run = () => {
   // handle run logic
   console.log({
@@ -13,10 +22,20 @@ const run = () => {
     endTime: endTime.value,
     compress: activeTab.value === 1,
   })
+
+  checkTimeFormats(startTime.value, endTime.value)
 }
+
+const snackbar = ref(false)
+const text = ref('')
+const timeout = ref(3000)
 </script>
 
 <template>
+  <v-snackbar v-model="snackbar" :timeout="timeout">
+    {{ text }}
+  </v-snackbar>
+
   <v-col cols="12" md="10" lg="8" class="my-4 pa-0">
     <FileUploader />
 
@@ -29,8 +48,8 @@ const run = () => {
       <v-col cols="6" class="pa-0 pt-4 pr-1">
         <v-text-field
           v-model="startTime"
-          label="Start Time"
-          placeholder="00:00:00"
+          label="Start Time (MM:SS)"
+          placeholder="00:00"
           variant="outlined"
           density="compact"
           hide-details
@@ -39,8 +58,8 @@ const run = () => {
       <v-col cols="6" class="pa-0 pt-4 pl-1">
         <v-text-field
           v-model="endTime"
-          label="End Time"
-          placeholder="00:00:00"
+          label="End Time (MM:SS)"
+          placeholder="00:00"
           variant="outlined"
           density="compact"
           hide-details
