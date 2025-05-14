@@ -3,9 +3,14 @@ import { ref } from 'vue'
 import FileUploader from './FileUploader.vue'
 import ffmpeg from '@/services/ffmpeg'
 import { db } from '@/db/db'
+
+const fileUploaderRef = ref(null)
+
 const startTime = ref('')
 const endTime = ref('')
 const file = ref(null)
+const progress = ffmpeg.progress
+const isLoading = ref(false)
 
 const checkTimeFormats = (startTime, endTime) => {
   if (!/^\d{2}:\d{2}$/.test(startTime) && !/^\d{2}:\d{2}$/.test(endTime)) {
@@ -36,13 +41,16 @@ const checkTimeFormats = (startTime, endTime) => {
 }
 
 const run = async () => {
+  isLoading.value = true
   if (!checkTimeFormats(startTime.value, endTime.value)) {
+    isLoading.value = false
     return
   }
 
   if (!file.value) {
     snackbar.value = true
     text.value = 'Please select a file'
+    isLoading.value = false
     return
   }
 
@@ -52,6 +60,15 @@ const run = async () => {
     createdAt: new Date(),
     video: new Blob([data.buffer], { type: 'video/mp4' }),
   })
+
+  startTime.value = ''
+  endTime.value = ''
+  file.value = null
+  if (fileUploaderRef.value) {
+    fileUploaderRef.value.clearFile()
+  }
+
+  isLoading.value = false
 }
 
 const handleFileSelected = (selectedFile) => {
@@ -69,7 +86,7 @@ const timeout = ref(3000)
   </v-snackbar>
 
   <v-col cols="12" md="10" lg="8" class="my-4 pa-0">
-    <FileUploader @file-selected="handleFileSelected" />
+    <FileUploader ref="fileUploaderRef" @file-selected="handleFileSelected" />
 
     <div class="cut-title">CUT</div>
 
@@ -102,9 +119,17 @@ const timeout = ref(3000)
       class="w-100 mt-4 text-black font-weight-bold"
       size="large"
       variant="flat"
+      :disabled="isLoading"
     >
       RUN
     </v-btn>
+    <v-progress-linear
+      v-if="isLoading"
+      :model-value="progress"
+      color="white"
+      class="mt-2"
+    ></v-progress-linear>
+    <p v-if="isLoading" class="mt-2">Progress: {{ progress }}%</p>
   </v-col>
 </template>
 

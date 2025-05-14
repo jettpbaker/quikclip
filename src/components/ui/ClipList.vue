@@ -3,7 +3,7 @@ import { useLiveQuery } from '@/db/useLiveQuery'
 import { db } from '@/db/db'
 import ClipCard from '@/components/ui/ClipCard.vue'
 
-const { data: clips, error } = useLiveQuery(() => db.clips.orderBy('createdAt').reverse().toArray())
+const { data: clips } = useLiveQuery(() => db.clips.orderBy('createdAt').reverse().toArray())
 
 const deleteAllClips = () => {
   db.clips.clear()
