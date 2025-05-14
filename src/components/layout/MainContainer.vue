@@ -15,9 +15,8 @@ const fastCut = ref(false)
 const loadFFmpeg = async () => {
   const ffmpeg = ffmpegRef.value
   ffmpeg.on('log', ({ message }) => {
-    if (messageRef.value) {
-      messageRef.value.innerHTML = message
-    }
+    console.log(message)
+    messageRef.value.innerText = message
   })
   await ffmpeg.load()
   loaded.value = true
@@ -33,8 +32,6 @@ const transcodeVideo = async () => {
     return
   }
   const ffmpeg = ffmpegRef.value
-  const threads = navigator.hardwareConcurrency || 1
-  console.log(`Using ${threads} threads`)
   const inputName = file.value.name
   const baseName = inputName.replace(/\.[^/.]+$/, '')
   const outputName = `${baseName}_${startTime.value.replace(/:/g, '-')}_${endTime.value.replace(/:/g, '-')}.mp4`
@@ -45,25 +42,44 @@ const transcodeVideo = async () => {
   let args = []
   if (fastCut.value) {
     // Copy streams (no re-encode) for fastest trim
-    args = ['-ss', startTime.value, '-to', endTime.value, '-i', inputName, '-c', 'copy', outputName]
-  } else {
-    // Full encode with multithreading
     args = [
-      '-threads',
-      threads.toString(),
-      '-loglevel',
-      'info',
       '-ss',
       startTime.value,
       '-to',
       endTime.value,
       '-i',
       inputName,
+      '-c:v',
+      'copy', // stream-copy video
+      '-c:a',
+      'aac', // re-encode audio to AAC
+      '-b:a',
+      '128k', // audio bitrate
+      outputName,
+    ]
+  } else {
+    // Full encode with multithreading (faster preset, container-level seek)
+    args = [
+      '-ss',
+      startTime.value,
+      '-i',
+      inputName,
+      '-to',
+      endTime.value,
+      '-c:v',
+      'libx264',
+      '-preset',
+      'ultrafast',
+      '-loglevel',
+      'info',
       outputName,
     ]
   }
   await ffmpeg.exec(args)
   const data = await ffmpeg.readFile(outputName)
+
+  ffmpeg.deleteFile(inputName)
+  ffmpeg.deleteFile(outputName)
 
   if (videoRef.value) {
     videoRef.value.src = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }))
@@ -99,3 +115,6 @@ onMounted(() => {
 <style scoped>
 /* Add any component-specific styles here */
 </style>
+
+<!-- Local: 00:13:57 -->
+<!-- Remote: 00:43:00 -->
