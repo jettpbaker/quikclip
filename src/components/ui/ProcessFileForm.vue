@@ -1,11 +1,13 @@
 <script setup>
 import { ref } from 'vue'
 import FileUploader from './FileUploader.vue'
+import ffmpeg from '@/services/ffmpeg'
 
 const activeTab = ref(0)
 const startTime = ref('')
 const endTime = ref('')
 const file = ref(null)
+const videoSrc = ref(null)
 
 const checkTimeFormats = (startTime, endTime) => {
   if (/^\d{2}:\d{2}$/.test(startTime) && /^\d{2}:\d{2}$/.test(endTime)) {
@@ -16,14 +18,7 @@ const checkTimeFormats = (startTime, endTime) => {
   return false
 }
 
-const run = () => {
-  // handle run logic
-  console.log({
-    startTime: startTime.value,
-    endTime: endTime.value,
-    compress: activeTab.value === 1,
-  })
-
+const run = async () => {
   checkTimeFormats(startTime.value, endTime.value)
 
   if (!file.value) {
@@ -31,10 +26,20 @@ const run = () => {
     text.value = 'Please select a file'
     return
   }
+
+  let data
+  if (activeTab.value === 0) {
+    data = await ffmpeg.cutVideo(file.value, startTime.value, endTime.value)
+  } else {
+    data = await ffmpeg.compressVideo(file.value, startTime.value, endTime.value)
+  }
+
+  const src = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }))
+  videoSrc.value = src
 }
 
-const handleFileSelected = (file) => {
-  file.value = file
+const handleFileSelected = (selectedFile) => {
+  file.value = selectedFile
 }
 
 const snackbar = ref(false)
@@ -88,5 +93,5 @@ const timeout = ref(3000)
       RUN
     </v-btn>
   </v-col>
-  <video controls />
+  <video controls :src="videoSrc" style="width: 20rem; height: auto" />
 </template>
